@@ -1531,6 +1531,8 @@
         <activity android:name=".carbon.Navbar" />
 
         <activity android:name=".carbon.NavRingTargets" />
+        
+<!-- added activity for NotificationDrawer -->        
 
         <activity android:name=".carbon.NotificationDrawer" />
 
