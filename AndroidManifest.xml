@@ -1532,6 +1532,8 @@
 
         <activity android:name=".carbon.NavRingTargets" />
 
+        <activity android:name=".carbon.NotificationDrawer" />
+
         <activity android:name=".carbon.PowerMenu" />
         
         <activity android:name=".carbon.NotificationDrawerStyle" />

@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <PreferenceScreen
-            android:key="hardware_keys"
-            android:title="@string/hardware_keys_title"
-            android:fragment="com.android.settings.carbon.HardwareKeys" />
+    <PreferenceCategory
+        android:key="options"
+        android:title="@string/additional_options_title">
 
- <!--moved from interface settings March.1st.2013.3:15pm -->
-         <PreferenceScreen
-            android:key="pie_control"
-            android:fragment="com.android.settings.paranoid.Pie"
-            android:title="@string/pie_controls_title"
-            android:summary="@string/pie_controls_summary" />
-            
-        <PreferenceCategory
-            android:key="navbar_options"
-            android:title="@string/navbar_mode">
-            
-         
-        <ListPreference
-            android:key="user_mode_ui"
-            android:title="@string/user_mode_ui"
-            android:summary="@string/user_mode_ui_summary"
-            android:entries="@array/user_mode_ui_entries"
-            android:entryValues="@array/user_mode_ui_values" />
 
-        <CheckBoxPreference
-            android:key="hide_extras"
-            android:title= "@string/hide_extras"
-            android:summary= "@string/hide_extras_summary"
-            android:defaultValue="false" />
-        </PreferenceCategory>
             
-<!--moved from interface settings March.1st.2013.3:15pm ^^-->
+            
+            
+               <Preference
+            android:fragment="com.android.settings.carbon.NotificationDrawerStyle"
+            android:key="notification_style"
+            android:title="@string/notification_style_title"
+            android:summary="@string/notification_style_summary" />
+
+        <PreferenceScreen	
+            android:id="@+id/slim_notification_shortcuts"
+            android:fragment="com.android.settings.carbon.notificationshortcuts.NotificationShortcuts"
+            android:key="slim_shortcuts_settings"
+            android:title="@string/notification_shortcuts_settings_title"
+            android:summary="@string/notification_shortcuts_settings_summary" />        
+            
+            
+
+    </PreferenceCategory>
 
         <PreferenceCategory
             android:key="navbar_options"
@@ -210,5 +202,7 @@
                 android:key="navigation_bar_widgets"
                 android:title="@string/navbar_widgets_title" />
         </PreferenceCategory>
+        
+
 
 </PreferenceScreen>

@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+/* from interfacesettings.java */
+import android.content.ContentResolver;
+
 import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
@@ -90,6 +93,12 @@ public class Navbar extends SettingsPreferenceFragment implements
     private static final String NAVBAR_HIDE_TIMEOUT = "navbar_hide_timeout";
     private static final String DRAG_HANDLE_OPACITY = "drag_handle_opacity";
     private static final String DRAG_HANDLE_WIDTH = "drag_handle_width";
+    
+    
+    /* from interfacesettings.java*/
+    private static final String PREF_USER_MODE_UI = "user_mode_ui";
+    private static final String PREF_HIDE_EXTRAS = "hide_extras";
+    
 
     public static final int REQUEST_PICK_CUSTOM_ICON = 200;
     public static final int REQUEST_PICK_LANDSCAPE_ICON = 201;
@@ -124,6 +133,11 @@ public class Navbar extends SettingsPreferenceFragment implements
     ListPreference mNavBarHideTimeout;
     SeekBarPreference mDragHandleOpacity;
     SeekBarPreference mDragHandleWidth;
+    
+    // hideExtras and ModeUI from interfacesettings.java
+    
+    CheckBoxPreference mHideExtras;
+    ListPreference mUserModeUI;
 
 
     private int mPendingIconIndex = -1;
@@ -145,9 +159,29 @@ public class Navbar extends SettingsPreferenceFragment implements
         setTitle(R.string.title_navbar);
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.navbar_settings);
+        
+        //from interfacesettings.java
+        ContentResolver cr = mContext.getContentResolver();
 
         PreferenceScreen prefs = getPreferenceScreen();
 
+        
+        
+        //mode ui and hide extras from interfacesettings.java
+        mHideExtras = (CheckBoxPreference) findPreference(PREF_HIDE_EXTRAS);
+        mHideExtras.setChecked(Settings.System.getBoolean(cr,
+                        Settings.System.HIDE_EXTRAS_SYSTEM_BAR, false));
+
+        mUserModeUI = (ListPreference) findPreference(PREF_USER_MODE_UI);
+        int uiMode = Settings.System.getInt(cr,
+                Settings.System.CURRENT_UI_MODE, 0);
+        mUserModeUI.setValue(Integer.toString(Settings.System.getInt(cr,
+                Settings.System.USER_UI_MODE, uiMode)));
+        mUserModeUI.setOnPreferenceChangeListener(this);
+        
+        
+        
+        
         mPicker = new ShortcutPickerHelper(this, this);
 
         mNavRingTargets = findPreference("navring_settings");
@@ -371,6 +405,13 @@ public class Navbar extends SettingsPreferenceFragment implements
                     Settings.System.NAVIGATION_BAR_MENU_ARROW_KEYS,
                     ((CheckBoxPreference) preference).isChecked());
             return true;
+            //mhideExtras from interfacesettings.java
+           
+        } else if (preference == mHideExtras) {
+            Settings.System.putBoolean(mContext.getContentResolver(),
+                    Settings.System.HIDE_EXTRAS_SYSTEM_BAR,
+                    ((CheckBoxPreference) preference).isChecked());
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -381,6 +422,13 @@ public class Navbar extends SettingsPreferenceFragment implements
         if (preference == menuDisplayLocation) {
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.MENU_LOCATION, Integer.parseInt((String) newValue));
+            return true;
+            
+        //mUserModeUI from interfacesettings.java    
+        } else if (preference == mUserModeUI) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.USER_UI_MODE, Integer.parseInt((String) newValue));
+            Helpers.restartSystemUI();
             return true;
         } else if (preference == mNavBarMenuDisplay) {
             Settings.System.putInt(getActivity().getContentResolver(),

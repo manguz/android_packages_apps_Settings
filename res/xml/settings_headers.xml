@@ -82,6 +82,13 @@
         android:title="@string/navbar_title"
         android:fragment="com.android.settings.carbon.Navbar"
         android:icon="@drawable/ic_carbon_navbar" />
+        
+    <!-- NotificationDrawer -->
+    <header
+        android:id="@+id/nav_bar"
+        android:title="@string/notification_drawer_title"
+        android:fragment="com.android.settings.carbon.NotificationDrawer"
+        android:icon="@drawable/ic_carbon_navbar" />
 
     <!-- Performance -->
     <header
@@ -94,13 +101,13 @@
                 android:targetClass="com.brewcrewfoo.performance.activities.MainActivity" />
     </header>
 
-    <!-- Powermenu -->
+    <!-- Powermenu
     <header
         android:id="@+id/power_menu_settings"
         android:title="@string/power_menu_title"
         android:fragment="com.android.settings.carbon.PowerMenu"
         android:icon="@drawable/ic_carbon_powermenu" />
-
+ -->
     <!-- Powerwidget -->
     <header
         android:id="@+id/power_widget_settings"

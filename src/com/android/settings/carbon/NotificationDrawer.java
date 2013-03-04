@@ -75,7 +75,7 @@ import com.android.settings.util.CMDProcessor;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.widgets.AlphaSeekBar;
 
-public class InterfaceSettings extends SettingsPreferenceFragment
+public class NotificationDrawer extends SettingsPreferenceFragment
 			implements Preference.OnPreferenceChangeListener {
 
     public static final String TAG = "InterfaceSettings";
@@ -114,7 +114,7 @@ public class InterfaceSettings extends SettingsPreferenceFragment
         mContext = getActivity();
 
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.interface_settings);
+        addPreferencesFromResource(R.xml.notification_settings);
         PreferenceScreen prefSet = getPreferenceScreen();
         ContentResolver cr = mContext.getContentResolver();
 
@@ -130,62 +130,13 @@ public class InterfaceSettings extends SettingsPreferenceFragment
                 Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF,
                 electronBeamFadesConfig ? 0 : 1) == 1;
 
-        mCrtOff = (CheckBoxPreference) findPreference(PREF_POWER_CRT_SCREEN_OFF);
-        mCrtOff.setChecked(isCrtOffChecked);
-        mCrtOff.setOnPreferenceChangeListener(this);
-
-        mCrtOn = (CheckBoxPreference) findPreference(PREF_POWER_CRT_SCREEN_ON);
-        mCrtOn.setChecked(Settings.System.getInt(cr,
-                Settings.System.SYSTEM_POWER_ENABLE_CRT_ON, 0) == 1);
-        mCrtOn.setEnabled(isCrtOffChecked);
-        mCrtOn.setOnPreferenceChangeListener(this);
-
-        mLcdDensity = findPreference("lcd_density_setup");
-        String currentProperty = SystemProperties.get("ro.sf.lcd_density");
-        try {
-            newDensityValue = Integer.parseInt(currentProperty);
-        } catch (Exception e) {
-            getPreferenceScreen().removePreference(mLcdDensity);
-        }
-
-        mLcdDensity.setSummary(getResources().getString(R.string.current_lcd_density) + currentProperty);
-
-        mCustomLabel = findPreference(PREF_CUSTOM_CARRIER_LABEL);
-        updateCustomLabelTextSummary();
-
-        mRamBar = findPreference(KEY_RECENTS_RAM_BAR);
-        updateRamBar();
 
 
 
-        mDualPane = (CheckBoxPreference) findPreference(KEY_DUAL_PANE);
-        boolean preferDualPane = getResources().getBoolean(
-                com.android.internal.R.bool.preferences_prefer_dual_pane);
-        boolean dualPaneMode = Settings.System.getInt(cr,
-                Settings.System.DUAL_PANE_PREFS, (preferDualPane ? 1 : 0)) == 1;
-        mDualPane.setChecked(dualPaneMode);
 
-        mWakeUpWhenPluggedOrUnplugged = (CheckBoxPreference) findPreference(PREF_WAKEUP_WHEN_PLUGGED_UNPLUGGED);
-        mWakeUpWhenPluggedOrUnplugged.setChecked(Settings.System.getBoolean(cr,
-                        Settings.System.WAKEUP_WHEN_PLUGGED_UNPLUGGED, true));
 
-        // hide option if device is already set to never wake up
-        if(!mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_unplugTurnsOnScreen)) {
-            ((PreferenceGroup) findPreference("misc")).removePreference(mWakeUpWhenPluggedOrUnplugged);
-        }
 
-        mShowWifiName = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_SHOW_WIFI_SSID);
-        mShowWifiName.setChecked(Settings.System.getInt(cr,
-                Settings.System.NOTIFICATION_SHOW_WIFI_SSID, 0) == 1);
 
-        PackageManager pm = getPackageManager();
-        boolean isMobileData = pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
-
-        if (!Utils.isPhone(getActivity()) || !isMobileData) {
-            // Nothing for tablets, large screen devices and non Wifi devices remove options
-            getPreferenceScreen().removePreference(mShowWifiName);
-        }
 
         setHasOptionsMenu(true);
     }
@@ -200,19 +151,9 @@ public class InterfaceSettings extends SettingsPreferenceFragment
         }
     }
 
-    private void updateRamBar() {
-        int ramBarMode = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                Settings.System.RECENTS_RAM_BAR_MODE, 0);
-        if (ramBarMode != 0)
-            mRamBar.setSummary(getResources().getString(R.string.ram_bar_color_enabled));
-        else
-            mRamBar.setSummary(getResources().getString(R.string.ram_bar_color_disabled));
-    }
 
-    private void openTransparencyDialog() {
-        getFragmentManager().beginTransaction().add(new AdvancedTransparencyDialog(), null)
-                .commit();
-    }
+
+
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -250,11 +191,6 @@ public class InterfaceSettings extends SettingsPreferenceFragment
                     ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
             return true;
 
-        } else if (preference.getKey().equals("transparency_dialog")) {
-            // getFragmentManager().beginTransaction().add(new
-            // TransparencyDialog(), null).commit();
-            openTransparencyDialog();
-            return true;
         } else if (preference == mWakeUpWhenPluggedOrUnplugged) {
             Settings.System.putBoolean(getActivity().getContentResolver(),
                     Settings.System.WAKEUP_WHEN_PLUGGED_UNPLUGGED,
@@ -270,17 +206,9 @@ public class InterfaceSettings extends SettingsPreferenceFragment
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateRamBar();
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        updateRamBar();
-    }
+
+
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
