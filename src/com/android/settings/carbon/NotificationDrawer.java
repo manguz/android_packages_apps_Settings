@@ -80,7 +80,7 @@ public class NotificationDrawer extends SettingsPreferenceFragment
 
     public static final String TAG = "InterfaceSettings";
     private static final String PREF_CUSTOM_CARRIER_LABEL = "custom_carrier_label";
-    private static final String KEY_RECENTS_RAM_BAR = "recents_ram_bar";
+//    private static final String KEY_RECENTS_RAM_BAR = "recents_ram_bar";
     private static final String KEY_DUAL_PANE = "dual_pane";
     private static final String PREF_WAKEUP_WHEN_PLUGGED_UNPLUGGED = "wakeup_when_plugged_unplugged";
     private static final String PREF_NOTIFICATION_SHOW_WIFI_SSID = "notification_show_wifi_ssid";
@@ -89,13 +89,13 @@ public class NotificationDrawer extends SettingsPreferenceFragment
 
 
     Preference mCustomLabel;
-    Preference mRamBar;
-    Preference mLcdDensity;
-    CheckBoxPreference mDualPane;
-    CheckBoxPreference mWakeUpWhenPluggedOrUnplugged;
-    CheckBoxPreference mShowWifiName;
-    CheckBoxPreference mCrtOff;
-    CheckBoxPreference mCrtOn;
+//    Preference mRamBar;
+//    Preference mLcdDensity;
+//    CheckBoxPreference mDualPane;
+//    CheckBoxPreference mWakeUpWhenPluggedOrUnplugged;
+//    CheckBoxPreference mShowWifiName;
+//    CheckBoxPreference mCrtOff;
+//    CheckBoxPreference mCrtOn;
     Context mContext;
 
     Random randomGenerator = new Random();
@@ -126,21 +126,14 @@ public class NotificationDrawer extends SettingsPreferenceFragment
         // use this to enable/disable crt on feature
         // crt only works if crt off is enabled
         // total system failure if only crt on is enabled
-        isCrtOffChecked = Settings.System.getInt(cr,
-                Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF,
-                electronBeamFadesConfig ? 0 : 1) == 1;
+//        isCrtOffChecked = Settings.System.getInt(cr,
+  //              Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF,
+    //            electronBeamFadesConfig ? 0 : 1) == 1;
 
 
 
 
-
-
-
-
-
-        setHasOptionsMenu(true);
-    }
-
+/*
     private void updateCustomLabelTextSummary() {
         mCustomLabelText = Settings.System.getString(getActivity().getContentResolver(),
                 Settings.System.CUSTOM_CARRIER_LABEL);
@@ -150,6 +143,13 @@ public class NotificationDrawer extends SettingsPreferenceFragment
             mCustomLabel.setSummary(mCustomLabelText);
         }
     }
+*/
+
+
+
+        setHasOptionsMenu(true);
+    }
+
 
 
 
@@ -157,7 +157,8 @@ public class NotificationDrawer extends SettingsPreferenceFragment
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mCustomLabel) {
+  /*
+    	  if (preference == mCustomLabel) {
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle(R.string.custom_carrier_label_title);
             alert.setMessage(R.string.custom_carrier_label_explain);
@@ -202,7 +203,7 @@ public class NotificationDrawer extends SettingsPreferenceFragment
                     mShowWifiName.isChecked() ? 1 : 0);
             return true;
         }
-
+*/
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
@@ -213,6 +214,7 @@ public class NotificationDrawer extends SettingsPreferenceFragment
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final String key = preference.getKey();
+        /*
          if (mCrtOff.equals(preference)) {
             isCrtOffChecked = ((Boolean) newValue).booleanValue();
             Settings.System.putInt(getActivity().getContentResolver(),
@@ -233,6 +235,8 @@ public class NotificationDrawer extends SettingsPreferenceFragment
             return true;
 
         }
+        
+        */
         return false;
     }
 
