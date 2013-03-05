@@ -20,10 +20,36 @@
             android:fragment="com.android.settings.carbon.notificationshortcuts.NotificationShortcuts"
             android:key="slim_shortcuts_settings"
             android:title="@string/notification_shortcuts_settings_title"
-            android:summary="@string/notification_shortcuts_settings_summary" />        
+            android:summary="@string/notification_shortcuts_settings_summary" /> 
+            
+            
+                <CheckBoxPreference
+            android:key="notification_show_wifi_ssid"
+            android:title="@string/notification_show_wifi_ssid_title"
+            android:summary="@string/notification_show_wifi_ssid_summary"
+            android:defaultValue="false" />
             
             
 
+    </PreferenceCategory>
+    
+    
+        <PreferenceCategory
+            android:title="@string/power_widget_title">
+        <PreferenceScreen
+            android:key="power"
+            android:title="@string/power_widget_title"
+            android:fragment="com.android.settings.carbon.PowerWidget" >
+        </PreferenceScreen>
+        </PreferenceCategory>
+        
+        <PreferenceCategory
+            android:title="@string/quick_settings_title">
+        <PreferenceScreen
+            android:key="quick_settings"
+            android:title="@string/quick_settings_title"
+            android:fragment="com.android.settings.carbon.QuickSettings" >
+        </PreferenceScreen>
     </PreferenceCategory>
 
 

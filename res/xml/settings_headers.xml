@@ -101,26 +101,6 @@
                 android:targetClass="com.brewcrewfoo.performance.activities.MainActivity" />
     </header>
 
-    <!-- Powermenu
-    <header
-        android:id="@+id/power_menu_settings"
-        android:title="@string/power_menu_title"
-        android:fragment="com.android.settings.carbon.PowerMenu"
-        android:icon="@drawable/ic_carbon_powermenu" />
- -->
-    <!-- Powerwidget -->
-    <header
-        android:id="@+id/power_widget_settings"
-        android:title="@string/power_widget_title"
-        android:fragment="com.android.settings.carbon.PowerWidget"
-        android:icon="@drawable/ic_carbon_powerwidget" />
-
-    <!-- Quicksettings-->
-    <header
-        android:id="@+id/quick_settings"
-        android:title="@string/quick_settings_title"
-        android:fragment="com.android.settings.carbon.QuickSettings"
-        android:icon="@drawable/ic_carbon_quicksettings" />
 
     <!-- Statusbar -->
     <header

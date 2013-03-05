@@ -93,7 +93,7 @@ public class NotificationDrawer extends SettingsPreferenceFragment
 //    Preference mLcdDensity;
 //    CheckBoxPreference mDualPane;
 //    CheckBoxPreference mWakeUpWhenPluggedOrUnplugged;
-//    CheckBoxPreference mShowWifiName;
+    CheckBoxPreference mShowWifiName;
 //    CheckBoxPreference mCrtOff;
 //    CheckBoxPreference mCrtOn;
     Context mContext;
@@ -132,18 +132,17 @@ public class NotificationDrawer extends SettingsPreferenceFragment
 
 
 
+        mShowWifiName = (CheckBoxPreference) findPreference(PREF_NOTIFICATION_SHOW_WIFI_SSID);
+        mShowWifiName.setChecked(Settings.System.getInt(cr,
+                Settings.System.NOTIFICATION_SHOW_WIFI_SSID, 0) == 1);
 
-/*
-    private void updateCustomLabelTextSummary() {
-        mCustomLabelText = Settings.System.getString(getActivity().getContentResolver(),
-                Settings.System.CUSTOM_CARRIER_LABEL);
-        if (mCustomLabelText == null || mCustomLabelText.length() == 0) {
-            mCustomLabel.setSummary(R.string.custom_carrier_label_notset);
-        } else {
-            mCustomLabel.setSummary(mCustomLabelText);
+        PackageManager pm = getPackageManager();
+        boolean isMobileData = pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+
+        if (!Utils.isPhone(getActivity()) || !isMobileData) {
+            // Nothing for tablets, large screen devices and non Wifi devices remove options
+            getPreferenceScreen().removePreference(mShowWifiName);
         }
-    }
-*/
 
 
 
@@ -157,53 +156,14 @@ public class NotificationDrawer extends SettingsPreferenceFragment
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-  /*
-    	  if (preference == mCustomLabel) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-            alert.setTitle(R.string.custom_carrier_label_title);
-            alert.setMessage(R.string.custom_carrier_label_explain);
-            final EditText input = new EditText(getActivity());
-            input.setText(mCustomLabelText != null ? mCustomLabelText : "");
-            alert.setView(input);
 
-            alert.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    String value = ((Spannable) input.getText()).toString();
-                    Settings.System.putString(getActivity().getContentResolver(),
-                            Settings.System.CUSTOM_CARRIER_LABEL, value);
-                    updateCustomLabelTextSummary();
-                    Intent i = new Intent();
-                    i.setAction("com.android.settings.LABEL_CHANGED");
-                    getActivity().getApplicationContext().sendBroadcast(i);
-                }
-            });
-            alert.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                }
-            });
-            alert.show();
-        } else if (preference == mLcdDensity) {
-            ((PreferenceActivity) getActivity())
-            .startPreferenceFragment(new DensityChanger(), true);
-            return true;
-        } else if (preference == mDualPane) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.DUAL_PANE_PREFS,
-                    ((CheckBoxPreference) preference).isChecked() ? 1 : 0);
-            return true;
-
-        } else if (preference == mWakeUpWhenPluggedOrUnplugged) {
-            Settings.System.putBoolean(getActivity().getContentResolver(),
-                    Settings.System.WAKEUP_WHEN_PLUGGED_UNPLUGGED,
-                    ((CheckBoxPreference) preference).isChecked());
-            return true;
-        } else if (preference == mShowWifiName) {
+// moved from interface.
+ if (preference == mShowWifiName) {
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.NOTIFICATION_SHOW_WIFI_SSID,
                     mShowWifiName.isChecked() ? 1 : 0);
             return true;
         }
-*/
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
@@ -214,29 +174,8 @@ public class NotificationDrawer extends SettingsPreferenceFragment
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final String key = preference.getKey();
-        /*
-         if (mCrtOff.equals(preference)) {
-            isCrtOffChecked = ((Boolean) newValue).booleanValue();
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.SYSTEM_POWER_ENABLE_CRT_OFF,
-                    (isCrtOffChecked ? 1 : 0));
-            // if crt off gets turned off, crt on gets turned off and disabled
-            if (!isCrtOffChecked) {
-                Settings.System.putInt(getActivity().getContentResolver(),
-                        Settings.System.SYSTEM_POWER_ENABLE_CRT_ON, 0);
-                mCrtOn.setChecked(false);
-            }
-            mCrtOn.setEnabled(isCrtOffChecked);
-            return true;
-        } else if (mCrtOn.equals(preference)) {
-            Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.SYSTEM_POWER_ENABLE_CRT_ON,
-                    ((Boolean) newValue).booleanValue() ? 1 : 0);
-            return true;
-
-        }
-        
-        */
+/*
+ */
         return false;
     }
 
@@ -392,26 +331,8 @@ public class NotificationDrawer extends SettingsPreferenceFragment
         }
 
         private void updateToggleState() {
-            if (linkTransparencies) {
-                mSbLabel.setText(R.string.transparency_dialog_transparency_sb_and_nv);
-                mNavigationBarGroup.setVisibility(View.GONE);
-            } else {
-                mSbLabel.setText(R.string.transparency_dialog_statusbar);
-                mNavigationBarGroup.setVisibility(View.VISIBLE);
-            }
+        	
 
-            mSeekBars[STATUSBAR_KG_ALPHA]
-                    .setEnabled(!mMatchStatusbarKeyguard.isChecked());
-            mSeekBars[NAVBAR_KG_ALPHA]
-                    .setEnabled(!mMatchNavbarKeyguard.isChecked());
-
-            // disable keyguard alpha if needed
-            if (!mSeekBars[STATUSBAR_KG_ALPHA].isEnabled()) {
-                mSeekBars[STATUSBAR_KG_ALPHA].setCurrentAlpha(KEYGUARD_ALPHA);
-            }
-            if (!mSeekBars[NAVBAR_KG_ALPHA].isEnabled()) {
-                mSeekBars[NAVBAR_KG_ALPHA].setCurrentAlpha(KEYGUARD_ALPHA);
-            }
         }
 
         @Override
