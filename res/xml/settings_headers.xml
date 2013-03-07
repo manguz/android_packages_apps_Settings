@@ -102,6 +102,13 @@
     </header>
 
 
+    <!-- Status Bar Toggles-->
+    <header
+        android:id="@+id/statusbar_toggles"
+        android:title="@string/toggles_title"
+        android:fragment="com.android.settings.carbon.StatusBarToggles"
+        android:icon="@drawable/ic_carbon_quicksettings" />
+
     <!-- Statusbar -->
     <header
         android:id="@+id/status_bar_settings"
@@ -239,6 +246,13 @@
     <!-- SYSTEM -->
     <header android:id="@+id/system_section"
         android:title="@string/header_category_system" />
+
+    <!-- Superuser -->
+    <header
+        android:id="@+id/superuser"
+        android:fragment="com.koushikdutta.superuser.PolicyNativeFragment"
+        android:icon="@drawable/ic_action_permission"
+        android:title="@string/superuser" />
 
     <!-- Date & Time -->
     <header
