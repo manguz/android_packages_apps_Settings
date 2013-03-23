@@ -1562,6 +1562,28 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="Settings$HybridSettingsActivity"
+                android:label="@string/hybrid_settings_title"
+                android:taskAffinity=""
+                android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.beerbong.HybridSettings" />
+            <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
+                android:resource="@id/hybrid_settings" />
+        </activity>
+
+        <activity android:name=".beerbong.HybridSettings"
+            android:label="HybridSettings" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="Settings$XposedSettingsActivity"
                 android:label="@string/xposed_settings_title"
                 android:taskAffinity=""

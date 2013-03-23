@@ -878,4 +878,5 @@ public class Settings extends PreferenceActivity
     public static class PieActivity extends Settings { /* empty */ }
     public static class CarbonSettingsActivity extends Settings { /* empty */ }
     public static class XposedSettingsActivity extends Settings { /* empty */ }
+    public static class HybridSettingsActivity extends Settings { /* empty */ }
 }
